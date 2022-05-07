@@ -1,0 +1,23 @@
+﻿@page "/screenshot-test-page"
+@using FHPathfinder.App.Interfaces
+@inject IScreenshotService ScreenshotService
+@inject IJSRuntime JSRuntime
+
+<h1>ScreenshotTestPage</h1>
+
+<img id="screenshot"/>
+
+<button class="btn btn-primary" @onclick="Capture">Capture</button>
+
+
+
+@code {
+
+    private async Task Capture()
+    {
+        using var stream = new MemoryStream(ScreenshotService.Capture());
+        var dotnetImageStream = new DotNetStreamReference(stream);
+        await JSRuntime.InvokeVoidAsync("setImageUsingStreaming", 
+            "screenshot", dotnetImageStream);
+    }
+}
