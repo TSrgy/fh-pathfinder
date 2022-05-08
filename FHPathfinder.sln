@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32422.2
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FHPathfinder.App", "src\FHPathfinder.App\FHPathfinder.App.csproj", "{73D9226B-F4B4-40F5-86EB-5F6B15D754B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FHPathfinder.App", "src\FHPathfinder.App\FHPathfinder.App.csproj", "{73D9226B-F4B4-40F5-86EB-5F6B15D754B1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{E3CF1B3D-E7CA-4DF4-8B94-042030D7FC59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FHPathfinder.RecognitionTests", "tests\FHPathfinder.RecognitionTests\FHPathfinder.RecognitionTests.csproj", "{ED37AE3D-689D-4578-85CB-D2FFCB2E83CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FHPathfinder.RecognitionService", "src\FHPathfinder.RecognitionService\FHPathfinder.RecognitionService.csproj", "{C5291EE3-4B8D-46F0-A4B3-B3532CE3B2FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,9 +23,20 @@ Global
 		{73D9226B-F4B4-40F5-86EB-5F6B15D754B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73D9226B-F4B4-40F5-86EB-5F6B15D754B1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{73D9226B-F4B4-40F5-86EB-5F6B15D754B1}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{ED37AE3D-689D-4578-85CB-D2FFCB2E83CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED37AE3D-689D-4578-85CB-D2FFCB2E83CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED37AE3D-689D-4578-85CB-D2FFCB2E83CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED37AE3D-689D-4578-85CB-D2FFCB2E83CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5291EE3-4B8D-46F0-A4B3-B3532CE3B2FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5291EE3-4B8D-46F0-A4B3-B3532CE3B2FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5291EE3-4B8D-46F0-A4B3-B3532CE3B2FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5291EE3-4B8D-46F0-A4B3-B3532CE3B2FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{ED37AE3D-689D-4578-85CB-D2FFCB2E83CA} = {E3CF1B3D-E7CA-4DF4-8B94-042030D7FC59}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2459E5CF-98A4-4CBF-9DED-43349542B8B8}
