@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using FHPathfinder.RecognitionService;
 using FHPathfinder.RecognitionService.Data;
-using FHPathfinder.RecognitionService.Data.StorageItems;
 using OpenCvSharp;
 using Xunit;
 

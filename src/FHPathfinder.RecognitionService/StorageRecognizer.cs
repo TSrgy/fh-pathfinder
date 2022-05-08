@@ -1,11 +1,10 @@
-﻿using System.Reflection;
-using FHPathfinder.RecognitionService.Data;
-using Microsoft.Extensions.FileProviders;
+﻿using FHPathfinder.RecognitionService.Data;
 using OpenCvSharp;
+using OpenCvSharp.Text;
 
 namespace FHPathfinder.RecognitionService
 {
-    public partial class StorageRecognizer
+    public class StorageRecognizer
     {
         private readonly DebugOptions _debugOptions;
         private readonly IconsRecognizer _iconsRecognizer;
@@ -18,12 +17,12 @@ namespace FHPathfinder.RecognitionService
             _numberFieldsRecognizer = numberFieldsRecognizer;
         }
 
-        public void RecognizeStorage(Mat image)
+        public Storage RecognizeStorage(Mat image)
         {
             var recognizedIcon = _iconsRecognizer.RecognizeAllIcons(image);
             var potentialNumberFieldRects = _numberFieldsRecognizer.RecognizePotentialNumberFields(image);
 
-            var storageItemNumberFields = new Dictionary<StorageItemType, Rect>();
+            var numberFieldRects = new Dictionary<StorageItemType, Rect>();
             foreach (var (itemType, iconRect) in recognizedIcon)
             {
                 var numberFieldRect = potentialNumberFieldRects
@@ -32,9 +31,11 @@ namespace FHPathfinder.RecognitionService
                     .FirstOrDefault((Rect?)null);
                 if (numberFieldRect.HasValue)
                 {
-                    storageItemNumberFields.Add(itemType, numberFieldRect.Value);
+                    numberFieldRects.Add(itemType, numberFieldRect.Value);
                 }
             }
+
+            var numberFieldTexts = RecognizeText(image, numberFieldRects);
 
             if (_debugOptions.HasFlag(DebugOptions.ShowStorage))
             {
@@ -43,13 +44,39 @@ namespace FHPathfinder.RecognitionService
                     foreach (var (itemType, iconRect) in recognizedIcon)
                     {
                         x.Rectangle(iconRect, Scalar.LimeGreen);
-                        if (storageItemNumberFields.ContainsKey(itemType))
+                        if (numberFieldRects.ContainsKey(itemType))
                         {
-                            x.Rectangle(storageItemNumberFields[itemType], Scalar.Red);
+                            x.Rectangle(numberFieldRects[itemType], Scalar.Red);
+                            x.PutText(numberFieldTexts[itemType].ToString(), numberFieldRects[itemType].TopLeft, HersheyFonts.HersheySimplex, 1, Scalar.LimeGreen);
                         }
                     }
                 });
             }
+
+            var dict = numberFieldTexts
+                .ToDictionary(
+                    x => x.Key,
+                    x => uint.Parse(x.Value.TrimEnd('+').Replace("k", "000"))
+                    );
+
+            return new Storage(dict);
+        }
+
+        private IReadOnlyDictionary<StorageItemType, string> RecognizeText(Mat image, IReadOnlyDictionary<StorageItemType, Rect> numberFields)
+        {
+            using var gray = image.CvtColor(ColorConversionCodes.BGRA2GRAY);
+            using var thrash = gray.Threshold(120, 255, ThresholdTypes.BinaryInv);
+            //Helpers.ShowMat(thrash);
+            using var engine = OCRTesseract.Create("Tessdata/", "eng", "0T23456789k+", 1, 6); // T = 1
+            var numberFieldTexts = new Dictionary<StorageItemType, string>();
+            foreach (var (itemType, rect) in numberFields)
+            {
+                using var numberFieldMat = new Mat(thrash, rect);
+                engine.Run(numberFieldMat, out var text, out _, out var texts, out _);
+                var result = texts?.FirstOrDefault()?.Replace('T', '1') ?? string.Empty;
+                numberFieldTexts.Add(itemType, result);
+            }
+            return numberFieldTexts;
         }
     }
 }

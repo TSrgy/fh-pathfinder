@@ -1,22 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FHPathfinder.RecognitionService.Data;
-using FHPathfinder.RecognitionService.Data.StorageItems;
+﻿using FHPathfinder.RecognitionService.Data;
 using OpenCvSharp;
 
 namespace FHPathfinder.RecognitionService;
 
 internal static class Helpers
 {
-    internal static readonly IReadOnlyDictionary<StorageItemType, Type> AllStorageItemTypes = new Dictionary<StorageItemType, Type>()
-    {
-        { StorageItemType.CrudeOil, typeof(CrudeOil)},
-        { StorageItemType.Diesel, typeof(Diesel)},
-        { StorageItemType.Petrol, typeof(Petrol)}
-    };
+    public static IEnumerable<StorageItemType> AllStorageItemTypes => Enum.GetValues<StorageItemType>();
 
     public static void ShowMat(Mat mat)
     {

@@ -19,7 +19,7 @@ public class IconsRecognizer : IDisposable
         var icons = new Dictionary<StorageItemType, Mat>();
         var embeddedProvider = new EmbeddedFileProvider(Assembly.GetExecutingAssembly());
 
-        foreach (var itemType in Helpers.AllStorageItemTypes.Keys)
+        foreach (var itemType in Helpers.AllStorageItemTypes)
         {
             using (var reader = embeddedProvider.GetFileInfo($"EmbeddedResources/Icons/{itemType}.png").CreateReadStream())
             {
@@ -34,7 +34,7 @@ public class IconsRecognizer : IDisposable
     public IReadOnlyDictionary<StorageItemType, Rect> RecognizeAllIcons(Mat image)
     {
         var recognizedIcons = new Dictionary<StorageItemType, Rect>();
-        foreach (var type in Helpers.AllStorageItemTypes.Keys)
+        foreach (var type in Helpers.AllStorageItemTypes)
         {
             var recIcon = RecognizeIcon(type, image);
             if (recIcon.HasValue)
