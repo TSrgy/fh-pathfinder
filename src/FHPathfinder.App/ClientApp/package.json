@@ -1,0 +1,36 @@
+{
+  "name": "fh-pathfinder",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build:dev": "webpack build --config webpack.dev.js",
+    "build:prod": "webpack build --config webpack.prod.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TSrgy/fh-pathfinder.git"
+  },
+  "author": "TSrgy",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/TSrgy/fh-pathfinder/issues"
+  },
+  "homepage": "https://github.com/TSrgy/fh-pathfinder#readme",
+  "dependencies": {
+    "ol": "^6.14.1"
+  },
+  "devDependencies": {
+    "css-loader": "^6.7.1",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.6.0",
+    "prettier": "^2.6.2",
+    "sass": "^1.52.1",
+    "sass-loader": "^13.0.0",
+    "ts-loader": "^9.3.0",
+    "typescript": "^4.6.4",
+    "webpack-cli": "^4.9.2",
+    "webpack-merge": "^5.8.0"
+  }
+}
